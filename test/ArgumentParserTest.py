@@ -109,6 +109,7 @@ class ArgumentParserTest(unittest.TestCase):
 		args = argument_parser_obj.get_cmd_arguments()
 
 		self.assertEqual(args, -1)
+
 if __name__ == "__main__":
 	unittest.main()
 
