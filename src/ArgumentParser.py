@@ -10,7 +10,11 @@ class ArgumentParser():
 		parser.add_argument("--get_devices",  action="store_true", help="returns a list of connected peripherals")
 		parser.add_argument("--get_linux_ver",  action="store_true", help="returns linux version")
 
-		self.cmd_arguments = parser.parse_args()
+		try:
+			self.cmd_arguments = parser.parse_args()
+		except SystemExit as e:
+			self.cmd_arguments = -1
+			# print (e)
 
 	def get_cmd_arguments(self):
 		return self.cmd_arguments
