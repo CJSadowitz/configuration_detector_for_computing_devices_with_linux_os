@@ -1,6 +1,7 @@
 class ReportGenerator():
-	pacmanInterface = None # update this with PacManInterface
-	hardwareParser = None # update this with hardware parser
+	def __init__(self):
+		pacmanInterface = None # update this with PacManInterface
+		hardwareParser = None # update this with hardware parser
 
 	def print_report(self):
 		pass

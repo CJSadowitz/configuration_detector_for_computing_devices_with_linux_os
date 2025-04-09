@@ -1,4 +1,7 @@
 class HardwareParser():
+	def __init__(self):
+		pass
+
 	def get_CPU_info(self):
 		pass
 
