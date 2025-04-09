@@ -1,4 +1,8 @@
 import unittest
+import sys
+
+sys.path.append("..")
+from src.HardwareParser import HardwareParser
 
 class HardwareParserTest(unittest.TestCase):
 	def test_get_CPU_info(self):
