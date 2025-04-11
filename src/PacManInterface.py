@@ -15,6 +15,9 @@ class PacManInterface:
 		pass
 
 	def run_command(self, cmd):
+		# input protection
+		if cmd != "pacman -Q" and cmd != "apt list --installed":
+			return -1
 		with os.popen(cmd) as stdout:
 			return stdout.read().strip()
 
