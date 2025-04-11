@@ -25,7 +25,7 @@ class PacManInterface:
 			if "arch" in os_info:
 				return self.run_command("pacman -Q")
 			elif "ubuntu" in os_info or "debian" in os_info:
-				return self.run_command("apt list --installed")
+				return self.run_command("apt list --installed | awk -F'[ /]' '{print $1, $3}'")
 			# and so on
 		except FileNotFoundError:
 			return "OS not identifiable."
