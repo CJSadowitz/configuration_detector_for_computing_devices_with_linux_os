@@ -16,25 +16,25 @@ class HardwareParser():
 			print(f"ERROR: Unexpected error occurred when running lshw: {e}")
 
 	def get_CPU_info(self):
-		pass
+		return self.get_section(["processor"])
 
 	def get_mem_info(self):
-		if not self.lshw_output:
-			print("ERROR: Failed to fetch memory info")
-			return []
-		memory = []
-		for line in self.lshw_output:
-			# [0] has HW path
-			# [1] has class (should be memory)
-			# [2:] has description
-			elems = line.split()
-			if elems[1] == "memory":
-				desc = " ".join(elems[2:])
-				memory.append(desc)
-		return memory
+		return self.get_section(["memory"])
 
 	def get_devices(self):
-		pass
+		return self.get_section(["input", "bus", "display", "network"])
 
 	def get_linux_ver(self):
 		pass
+
+	def get_section(self, section_name_list):
+		if not self.lshw_output:
+			print("ERROR: Failed to fetch memory info")
+			return []
+		section = []
+		for line in self.lshw_output:
+			elems = line.split()
+			if elems[1] in section_name_list:
+				desc = " ".join(elems[2:])
+				section.append(desc)
+		return section
