@@ -14,6 +14,15 @@ class HardwareParser():
 			print("ERROR: Could not find lshw")
 		except Exception as e:
 			print(f"ERROR: Unexpected error occurred when running lshw: {e}")
+		self.version_read = False
+		try:
+			proc = subprocess.run(["cat", "/proc/version"], capture_output=True)
+			self.version_read = proc.stdout.decode()
+		except FileNotFoundError:
+			print("ERROR: Could not find cat")
+		except Exception as e:
+			print(f"ERROR: Unexpected error occured when running cat: {e}")
+
 
 	def get_CPU_info(self):
 		return self.get_section(["processor"])
@@ -25,7 +34,10 @@ class HardwareParser():
 		return self.get_section(["input", "display", "bus", "network"])
 
 	def get_linux_ver(self):
-		pass
+		if not self.version_read:
+			print("ERROR: Failed to fetch version")
+			return []
+		return self.version_read
 
 	def get_section(self, section_name_list):
 		if not self.lshw_output:

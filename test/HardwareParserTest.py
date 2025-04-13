@@ -65,7 +65,15 @@ class HardwareParserTest(unittest.TestCase):
 		self.assertEqual(expected, out)
 
 	def test_get_linux_ver(self):
-		pass
+		hp = HardwareParser()
+		hp.version_read = [
+"Linux version 6.11.0-21-generic (buildd@lcy02-amd64-097) (x86_64-linux-gnu-gcc-13 (Ubuntu 13.3.0-6ubuntu2~24.04) 13.3.0, GNU ld (GNU Binutils for Ubuntu) 2.42) #21~24.04.1-Ubuntu SMP PREEMPT_DYNAMIC Mon Feb 24 16:52:15 UTC 2"
+		]
+		expected = [
+"Linux version 6.11.0-21-generic (buildd@lcy02-amd64-097) (x86_64-linux-gnu-gcc-13 (Ubuntu 13.3.0-6ubuntu2~24.04) 13.3.0, GNU ld (GNU Binutils for Ubuntu) 2.42) #21~24.04.1-Ubuntu SMP PREEMPT_DYNAMIC Mon Feb 24 16:52:15 UTC 2"
+		]
+		out = hp.get_linux_ver()
+		self.assertEqual(expected, out)
 
 if __name__ == "__main__":
 	unittest.main()
