@@ -28,7 +28,6 @@ class HardwareParserTest(unittest.TestCase):
 		self.assertEqual(expected, out)
 	def test_get_mem_info(self):
 		hp = HardwareParser()
-
 		# ovewrite output with a test case
 		hp.lshw_output = [
 				"/0/0                             memory         96KiB BIOS",
@@ -55,7 +54,15 @@ class HardwareParserTest(unittest.TestCase):
 		self.assertEqual(expected, out)
 
 	def test_get_CPU_info(self):
-		pass
+		hp = HardwareParser()
+		hp.lshw_output = [
+				"/0                       bus            Motherboard",
+				"/0/0                     memory         4GiB System memory",
+				"/0/1                     processor      Intel(R) Celeron(R) N4120 CPU @ 1.10GHz"
+		]
+		expected = ["Intel(R) Celeron(R) N4120 CPU @ 1.10GHz"]
+		out = hp.get_CPU_info()
+		self.assertEqual(expected, out)
 
 	def test_get_linux_ver(self):
 		pass
