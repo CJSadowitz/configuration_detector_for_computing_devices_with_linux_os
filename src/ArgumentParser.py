@@ -9,6 +9,8 @@ class ArgumentParser():
 		parser.add_argument("--get_mem_info", action="store_true", help="returns information on memory")
 		parser.add_argument("--get_devices",  action="store_true", help="returns a list of connected peripherals")
 		parser.add_argument("--get_linux_ver",  action="store_true", help="returns linux version")
+		parser.add_argument("--file_type", type=str, choices=["csv", "txt", "json"], help="save file type")
+		parser.add_argument("--action", type=str, choices=["s", "p"], help="save or print")
 
 		try:
 			self.cmd_arguments = parser.parse_args()
