@@ -37,7 +37,11 @@ class HardwareParser():
 			if elems[1] in section_name_list:
 				desc = " ".join(elems[2:])
 				section.append(desc)
-			elif elems[1][0:5] in section_name_list:
+			elif any(elems[1].startswith(section) for section in section_name_list):
 				desc = " ".join(elems[3:])
 				section.append(desc)
+			elif elems[2] in section_name_list:
+				desc = " ".join(elems[3:])
+				section.append(desc)
+
 		return section
