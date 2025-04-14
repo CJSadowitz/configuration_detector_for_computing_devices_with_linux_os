@@ -37,7 +37,7 @@ class HardwareParser():
 		if not self.version_read:
 			print("ERROR: Failed to fetch version")
 			return []
-		return self.version_read
+		return self.version_read.strip()
 
 	def get_section(self, section_name_list):
 		if not self.lshw_output:
@@ -48,12 +48,12 @@ class HardwareParser():
 			elems = line.split()
 			if elems[1] in section_name_list:
 				desc = " ".join(elems[2:])
-				section.append(desc)
+				section.append(desc.strip())
 			elif any(elems[1].startswith(section) for section in section_name_list):
 				desc = " ".join(elems[3:])
-				section.append(desc)
-			elif elems[2] in section_name_list:
+				section.append(desc.strip())
+			elif len(elems) >= 3 and elems[2] in section_name_list:
 				desc = " ".join(elems[3:])
-				section.append(desc)
+				section.append(desc.strip())
 
 		return section
