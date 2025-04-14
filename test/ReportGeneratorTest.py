@@ -38,31 +38,31 @@ class ReportGeneratorTest(unittest.TestCase):
 	def test_format_report_csv_get_devices(self):
 		info = ["Lid Switch", "Power Button"]
 		out = get_report_single(info, "csv", "get_devices")
-		expected = ""
+		expected = "Software,Version,Linux Version,CPU,Memory,Devices\n,,,,,Lid Switch,\n,,,,,Power Button,"
 		self.assertEqual(out, expected)
 
 	def test_format_report_csv_get_CPU_info(self):
 		info = ["Intel(R) Celeron(R) N4120 CPU @ 1.10GHz"]
 		out = get_report_single(info, "csv", "get_CPU_info")
-		expected = ""
+		expected = "Software,Version,Linux Version,CPU,Memory,Devices\n,,,Intel(R) Celeron(R) N4120 CPU @ 1.10GHz,,,"
 		self.assertEqual(out, expected)
 
 	def test_format_report_csv_get_mem_info(self):
 		info = ["4GiB System memory"]
 		out = get_report_single(info, "csv", "get_mem_info")
-		expected = ""
+		expected = "Software,Version,Linux Version,CPU,Memory,Devices\n,,,,4GiB System memory,,"
 		self.assertEqual(out, expected)
 
 	def test_format_report_csv_get_linux_ver(self):
 		info = "Linux version 6.11.0-21-generic (buildd@lcy02-amd64-097) (x86_64-linux-gnu-gcc-13 (Ubuntu 13.3.0-6ubuntu2~24.04) 13.3.0, GNU ld  (GNU Binutils for Ubuntu) 2.42) #21~24.04.1-Ubuntu SMP PREEMPT_DYNAMIC Mon Feb 24 16:52:15 UTC 2"
 		out = get_report_single(info, "csv", "get_linux_ver")
-		expected = ""
+		expected = "Software,Version,Linux Version,CPU,Memory,Devices\n,,Linux version 6.11.0-21-generic (buildd@lcy02-amd64-097) (x86_64-linux-gnu-gcc-13 (Ubuntu 13.3.0-6ubuntu2~24.04) 13.3.0  GNU ld  (GNU Binutils for Ubuntu) 2.42) #21~24.04.1-Ubuntu SMP PREEMPT_DYNAMIC Mon Feb 24 16:52:15 UTC 2,,,,"
 		self.assertEqual(out, expected)
 
 	def test_format_report_csv_get_packages(self):
 		info = "accountsservice 23.13.9-2ubuntu6\nacl 2.3.2-1build1.1\nadduser 3.137ubuntu1"
 		out = get_report_single(info, "csv", "get_packages")
-		expected = ""
+		expected = "Software,Version,Linux Version,CPU,Memory,Devices\naccountsservice,23.13.9-2ubuntu6,,,,,,\nacl,2.3.2-1build1.1\nadduser,3.137ubuntu1"
 		self.assertEqual(out, expected)
 
 	def test_format_report_json_get_devices(self):
