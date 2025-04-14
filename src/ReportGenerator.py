@@ -37,6 +37,8 @@ class ReportGenerator():
 			# break report into a list of at least the required number of rows
 			rows = 1 + max(1, len(self.cpuInfo), len(self.memInfo), len(self.devicesInfo))
 			self.report = self.report.split("\n")
+			if len(self.report[-1]) == 0:
+				self.report = self.report[:-1]
 			while len(self.report) < rows:
 				self.report.append(",")
 
@@ -46,7 +48,7 @@ class ReportGenerator():
 					if self.linuxVer != "":
 						self.report[r] += "," + self.linuxVer.replace(",", " ") + ","
 					else:
-						self.report[r] += ",,,"
+						self.report[r] += ",,"
 				else:
 					self.report[r] += ",," # was 4 changed to 3 see no difference
 				if len(self.cpuInfo) > r - 1:

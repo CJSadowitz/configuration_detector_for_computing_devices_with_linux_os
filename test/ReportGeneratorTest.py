@@ -62,7 +62,7 @@ class ReportGeneratorTest(unittest.TestCase):
 	def test_format_report_csv_get_packages(self):
 		info = "accountsservice 23.13.9-2ubuntu6\nacl 2.3.2-1build1.1\nadduser 3.137ubuntu1"
 		out = get_report_single(info, "csv", "get_packages")
-		expected = "Software,Version,Linux Version,CPU,Memory,Devices\naccountsservice,23.13.9-2ubuntu6,,,,,,\nacl,2.3.2-1build1.1\nadduser,3.137ubuntu1"
+		expected = "Software,Version,Linux Version,CPU,Memory,Devices\naccountsservice,23.13.9-2ubuntu6,,,,,\nacl,2.3.2-1build1.1\nadduser,3.137ubuntu1"
 		self.assertEqual(out, expected)
 
 	def test_format_report_json_get_devices(self):
