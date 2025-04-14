@@ -17,6 +17,5 @@ def main():
 	if args.action == "s": ReportGenerator(software, cpu_info, mem_info, devices, linux_ver).save_report(args.file_type)
 	if args.action == "p": ReportGenerator(software, cpu_info, mem_info, devices, linux_ver).print_report(args.file_type)
 
-
 if __name__ == "__main__":
 	main()
