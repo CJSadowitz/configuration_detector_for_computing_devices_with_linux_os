@@ -67,7 +67,7 @@ class ReportGenerator():
 				for software in self.softwareInstalled.split("\n"):
 					name, version = software.split(" ")
 					self.report = self.report + "\n\t\t{\n\t\t\t\"name\": \"" + name + "\",\n\t\t\t\"version\": \"" + version + "\"\n\t\t},"
-			self.report = self.report[:-1]
+				self.report = self.report[:-1] # Will delete the bracket if section is empty
 			self.report = self.report + "\n\t],\n"
 
 			# print Linux version
@@ -75,23 +75,26 @@ class ReportGenerator():
 
 			# print CPU info
 			self.report += "\t\"cpu\": ["
-			for cpu in self.cpuInfo:
-				self.report += "\n\t\t\"" + cpu + "\","
-			self.report = self.report[:-1]
+			if self.cpuInfo != []:
+				for cpu in self.cpuInfo:
+					self.report += "\n\t\t\"" + cpu + "\","
+				self.report = self.report[:-1] # Will delete the bracket if section is empty
 			self.report += "\n\t],\n"
 
 			# print memory info
 			self.report += "\t\"memory\": ["
-			for mem in self.memInfo:
-				self.report += "\n\t\t\"" + mem + "\","
-			self.report = self.report[:-1]
+			if self.memInfo != []:
+				for mem in self.memInfo:
+					self.report += "\n\t\t\"" + mem + "\","
+				self.report = self.report[:-1] # Will delete the bracket if section is empty
 			self.report += "\n\t],\n"
 
 			# print devices
 			self.report += "\t\"devices\": ["
-			for dev in self.devicesInfo:
-				self.report += "\n\t\t\"" + dev + "\","
-			self.report = self.report[:-1]
+			if self.devicesInfo != []:
+				for dev in self.devicesInfo:
+					self.report += "\n\t\t\"" + dev + "\","
+				self.report = self.report[:-1] # Will delete the bracket if section is empty
 			self.report += "\n\t]\n}\n"
 
 	def print_report(self, fileFormat):
