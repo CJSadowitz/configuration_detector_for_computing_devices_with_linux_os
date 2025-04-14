@@ -32,20 +32,20 @@ class ReportGenerator():
 		elif(fileFormat == "csv"):
 			self.report = self.softwareInstalled
 			self.report = self.report.replace(" ", ",")
-			self.report = "Software, Version\n" + self.report
+			self.report = "Software,Version\n" + self.report
 
 			# break report into a list of at least the required number of rows
 			rows = 1 + max(1, len(self.cpuInfo), len(self.memInfo), len(self.devicesInfo))
 			self.report = self.report.split("\n")
 			while len(self.report) < rows:
-				self.report.append("")
+				self.report.append(",")
 
-			self.report[0] += ",,Linux Version,,CPU,Memory,Devices"
+			self.report[0] += ",Linux Version,CPU,Memory,Devices"
 			for r in range(1, rows):
 				if r == 1:
-					self.report[r] += ",," + self.linuxVer.replace(",", " ") + ",,"
+					self.report[r] += ",," + self.linuxVer.replace(",", " ") + ","
 				else:
-					self.report[r] += ",,,,"
+					self.report[r] += ",," # was 4 changed to 3 see no difference
 				if len(self.cpuInfo) > r - 1:
 					self.report[r] += self.cpuInfo[r - 1] + ","
 				else:
