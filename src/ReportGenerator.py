@@ -43,7 +43,10 @@ class ReportGenerator():
 			self.report[0] += ",Linux Version,CPU,Memory,Devices"
 			for r in range(1, rows):
 				if r == 1:
-					self.report[r] += ",," + self.linuxVer.replace(",", " ") + ","
+					if self.linuxVer != "":
+						self.report[r] += "," + self.linuxVer.replace(",", " ") + ","
+					else:
+						self.report[r] += ",,,"
 				else:
 					self.report[r] += ",," # was 4 changed to 3 see no difference
 				if len(self.cpuInfo) > r - 1:

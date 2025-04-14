@@ -95,6 +95,31 @@ class ReportGeneratorTest(unittest.TestCase):
 		expected = '{\n\t"software": [\n\t],\n\t"linux-version": "Linux version 6.11.0-21-generic (buildd@lcy02-amd64-097) (x86_64-linux-gnu-gcc-13 (Ubuntu 13.3.0-6ubuntu2~24.04) 13.3.0, GNU ld  (GNU Binutils for Ubuntu) 2.42) #21~24.04.1-Ubuntu SMP PREEMPT_DYNAMIC Mon Feb 24 16:52:15 UTC 2",\n\t"cpu": [\n\t],\n\t"memory": [\n\t],\n\t"devices": [\n\t]\n}\n'
 		self.assertEqual(out, expected)
 
+	def test_format_report_txt_all(self):
+		out = get_report_all("txt")
+		expected = "=== Software Installed ===\naccountsservice 23.13.9-2ubuntu6\nacl 2.3.2-1build1.1\nadduser 3.137ubuntu1\n\n=== CPU Info ===\nIntel(R) Celeron(R) N4120 CPU @ 1.10GHz\n\n=== Memory Info ===\n4GiB System memory\n\n=== Devices ===\nLid Switch\nPower Button\n\n=== Linux Version ===\nLinux version 6.11.0-21-generic (buildd@lcy02-amd64-097) (x86_64-linux-gnu-gcc-13 (Ubuntu 13.3.0-6ubuntu2~24.04) 13.3.0, GNU ld  (GNU Binutils for Ubuntu) 2.42) #21~24.04.1-Ubuntu SMP PREEMPT_DYNAMIC Mon Feb 24 16:52:15 UTC 2\n\n"
+		self.assertEqual(out, expected)
+
+	def test_format_report_csv_all(self):
+		out = get_report_all("csv")
+		expected = "Software,Version,Linux Version,CPU,Memory,Devices\naccountsservice,23.13.9-2ubuntu6,Linux version 6.11.0-21-generic (buildd@lcy02-amd64-097) (x86_64-linux-gnu-gcc-13 (Ubuntu 13.3.0-6ubuntu2~24.04) 13.3.0  GNU ld  (GNU Binutils for Ubuntu) 2.42) #21~24.04.1-Ubuntu SMP PREEMPT_DYNAMIC Mon Feb 24 16:52:15 UTC 2,Intel(R) Celeron(R) N4120 CPU @ 1.10GHz,4GiB System memory,Lid Switch,\nacl,2.3.2-1build1.1,,,,Power Button,\nadduser,3.137ubuntu1"
+		self.assertEqual(out, expected)
+
+	def test_format_report_json_all(self):
+		out = get_report_all("json")
+		expected = ""
+		self.assertEqual(out, expected)
+
+def get_report_all(format):
+	software = "accountsservice 23.13.9-2ubuntu6\nacl 2.3.2-1build1.1\nadduser 3.137ubuntu1"
+	cpu = ["Intel(R) Celeron(R) N4120 CPU @ 1.10GHz"]
+	mem = ["4GiB System memory"]
+	devices = ["Lid Switch", "Power Button"]
+	linux_ver = "Linux version 6.11.0-21-generic (buildd@lcy02-amd64-097) (x86_64-linux-gnu-gcc-13 (Ubuntu 13.3.0-6ubuntu2~24.04) 13.3.0, GNU ld  (GNU Binutils for Ubuntu) 2.42) #21~24.04.1-Ubuntu SMP PREEMPT_DYNAMIC Mon Feb 24 16:52:15 UTC 2"
+	rg = ReportGenerator(software, cpu, mem, devices, linux_ver)
+	rg.format_report(format)
+	return rg.report
+
 def get_report_single(info, format, type):
 	rg = ReportGenerator()
 	match type:
