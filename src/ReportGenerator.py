@@ -95,7 +95,6 @@ class ReportGenerator():
 
 	def print_report(self, fileFormat):
 		self.format_report(fileFormat)
-		print (fileFormat)
 		print(self.report)
 
 	def save_report(self, fileFormat):
@@ -103,4 +102,3 @@ class ReportGenerator():
 		with open(f"report.{fileFormat}", "w") as file:
 			file.write(self.report)
 		print("Report saved!")
-		pass
