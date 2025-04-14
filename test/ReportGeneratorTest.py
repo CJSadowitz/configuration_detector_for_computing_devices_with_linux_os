@@ -106,8 +106,9 @@ class ReportGeneratorTest(unittest.TestCase):
 		self.assertEqual(out, expected)
 
 	def test_format_report_json_all(self):
+		self.maxDiff = None
 		out = get_report_all("json")
-		expected = ""
+		expected = '{\n\t"software": [\n\t\t{\n\t\t\t"name": "accountsservice",\n\t\t\t"version": "23.13.9-2ubuntu6"\n\t\t},\n\t\t{\n\t\t\t"name": "acl",\n\t\t\t"version": "2.3.2-1build1.1"\n\t\t},\n\t\t{\n\t\t\t"name": "adduser",\n\t\t\t"version": "3.137ubuntu1"\n\t\t}\n\t],\n\t"linux-version": "Linux version 6.11.0-21-generic (buildd@lcy02-amd64-097) (x86_64-linux-gnu-gcc-13 (Ubuntu 13.3.0-6ubuntu2~24.04) 13.3.0, GNU ld  (GNU Binutils for Ubuntu) 2.42) #21~24.04.1-Ubuntu SMP PREEMPT_DYNAMIC Mon Feb 24 16:52:15 UTC 2",\n\t"cpu": [\n\t\t"Intel(R) Celeron(R) N4120 CPU @ 1.10GHz"\n\t],\n\t"memory": [\n\t\t"4GiB System memory"\n\t],\n\t"devices": [\n\t\t"Lid Switch",\n\t\t"Power Button"\n\t]\n}\n'
 		self.assertEqual(out, expected)
 
 def get_report_all(format):
