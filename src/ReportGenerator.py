@@ -1,6 +1,3 @@
-from PacManInterface import PacManInterface
-from HardwareParser import HardwareParser
-
 class ReportGenerator():
 	softwareInstalled = None
 	cpuInfo = None
@@ -9,15 +6,12 @@ class ReportGenerator():
 	linuxVer = None
 	report = None
 
-	def __init__(self):
-		pacmanInterface = PacManInterface()
-		hardwareParser = HardwareParser()
-
-		self.softwareInstalled = pacmanInterface.get_packages()
-		self.cpuInfo     = hardwareParser.get_CPU_info()
-		self.memInfo     = hardwareParser.get_mem_info()
-		self.devicesInfo = hardwareParser.get_devices()
-		self.linuxVer    = hardwareParser.get_linux_ver()
+	def __init__(self, packageInfo="", cpuInfo=[], memInfo=[], devicesInfo=[], linuxVer=[]):
+		self.softwareInstalled = packageInfo
+		self.cpuInfo     = cpuInfo
+		self.memInfo     = memInfo
+		self.devicesInfo = devicesInfo
+		self.linuxVer    = linuxVer
 
 	def format_report(self, fileFormat):
 		if(fileFormat == "txt"):
@@ -101,6 +95,7 @@ class ReportGenerator():
 
 	def print_report(self, fileFormat):
 		self.format_report(fileFormat)
+		print (fileFormat)
 		print(self.report)
 
 	def save_report(self, fileFormat):
