@@ -7,7 +7,7 @@ from src.ArgumentParser import ArgumentParser
 class ArgumentParserTest(unittest.TestCase):
 	# Test individual arguments to show the syntax for each and that they individually work
 	def test_get_packages(self):
-		args = get_args(['n/a', '--get_packages'])
+		args = get_args(['n/a', '--get_packages', '--file_type', 'txt'])
 
 		self.assertTrue(args.get_packages)
 		self.assertFalse(args.get_CPU_info)
@@ -16,7 +16,7 @@ class ArgumentParserTest(unittest.TestCase):
 		self.assertFalse(args.get_linux_ver)
 
 	def test_get_CPU_info(self):
-		args = get_args(['n/a', '--get_CPU_info'])
+		args = get_args(['n/a', '--get_CPU_info', '--file_type', 'txt'])
 
 		self.assertFalse(args.get_packages)
 		self.assertTrue(args.get_CPU_info)
@@ -25,7 +25,7 @@ class ArgumentParserTest(unittest.TestCase):
 		self.assertFalse(args.get_linux_ver)
 
 	def test_get_mem_info(self):
-		args = get_args(['n/a', '--get_mem_info'])
+		args = get_args(['n/a', '--get_mem_info', '--file_type', 'txt'])
 
 		self.assertFalse(args.get_packages)
 		self.assertFalse(args.get_CPU_info)
@@ -34,7 +34,7 @@ class ArgumentParserTest(unittest.TestCase):
 		self.assertFalse(args.get_linux_ver)
 
 	def test_get_devices(self):
-		args = get_args(['n/a', '--get_devices'])
+		args = get_args(['n/a', '--get_devices', '--file_type', 'txt'])
 
 		self.assertFalse(args.get_packages)
 		self.assertFalse(args.get_CPU_info)
@@ -43,7 +43,7 @@ class ArgumentParserTest(unittest.TestCase):
 		self.assertFalse(args.get_linux_ver)
 
 	def test_get_linux_ver(self):
-		args = get_args(['n/a', '--get_linux_ver'])
+		args = get_args(['n/a', '--get_linux_ver', '--file_type', 'txt'])
 
 		self.assertFalse(args.get_packages)
 		self.assertFalse(args.get_CPU_info)
@@ -53,7 +53,7 @@ class ArgumentParserTest(unittest.TestCase):
 
 	# Show that any can be used at a time
 	def test_all(self):
-		args = get_args(['n/a', '--get_packages', '--get_CPU_info', '--get_mem_info', '--get_devices', '--get_linux_ver'])
+		args = get_args(['n/a', '--file_type', 'txt', '--get_packages', '--get_CPU_info', '--get_mem_info', '--get_devices', '--get_linux_ver'])
 
 		self.assertTrue(args.get_packages)
 		self.assertTrue(args.get_CPU_info)
@@ -63,7 +63,7 @@ class ArgumentParserTest(unittest.TestCase):
 
 	# Show that order does not matter
 	def test_all_inverse_order(self):
-		args = get_args(['n/a', '--get_linux_ver', '--get_devices', '--get_mem_info', '--get_CPU_info', '--get_packages'])
+		args = get_args(['n/a', '--file_type', 'txt', '--get_linux_ver', '--get_devices', '--get_mem_info', '--get_CPU_info', '--get_packages'])
 
 		self.assertTrue(args.get_packages)
 		self.assertTrue(args.get_CPU_info)
@@ -117,7 +117,7 @@ class ArgumentParserTest(unittest.TestCase):
 		self.assertNotEqual(result, "json")
 
 	def test_action_correct_choice(self):
-		args = get_args(['n/a', '--action', 's'])
+		args = get_args(['n/a', '--action', 's', '--file_type', 'txt'])
 
 		result = None
 		try:

@@ -1,6 +1,3 @@
-from PacManInterface import PacManInterface
-from HardwareParser import HardwareParser
-
 class ReportGenerator():
 	softwareInstalled = None
 	cpuInfo = None
@@ -9,15 +6,12 @@ class ReportGenerator():
 	linuxVer = None
 	report = None
 
-	def __init__(self):
-		pacmanInterface = PacManInterface()
-		hardwareParser = HardwareParser()
-
-		self.softwareInstalled = pacmanInterface.get_packages()
-		self.cpuInfo     = hardwareParser.get_CPU_info()
-		self.memInfo     = hardwareParser.get_mem_info()
-		self.devicesInfo = hardwareParser.get_devices()
-		self.linuxVer    = hardwareParser.get_linux_ver()
+	def __init__(self, packageInfo="", cpuInfo=[], memInfo=[], devicesInfo=[], linuxVer=""):
+		self.softwareInstalled = packageInfo
+		self.cpuInfo     = cpuInfo
+		self.memInfo     = memInfo
+		self.devicesInfo = devicesInfo
+		self.linuxVer    = linuxVer
 
 	def format_report(self, fileFormat):
 		if(fileFormat == "txt"):
@@ -38,20 +32,25 @@ class ReportGenerator():
 		elif(fileFormat == "csv"):
 			self.report = self.softwareInstalled
 			self.report = self.report.replace(" ", ",")
-			self.report = "Software, Version\n" + self.report
+			self.report = "Software,Version\n" + self.report
 
 			# break report into a list of at least the required number of rows
 			rows = 1 + max(1, len(self.cpuInfo), len(self.memInfo), len(self.devicesInfo))
 			self.report = self.report.split("\n")
+			if len(self.report[-1]) == 0:
+				self.report = self.report[:-1]
 			while len(self.report) < rows:
-				self.report.append("")
+				self.report.append(",")
 
-			self.report[0] += ",,Linux Version,,CPU,Memory,Devices"
-			for r in range(1, rows + 1):
+			self.report[0] += ",Linux Version,CPU,Memory,Devices"
+			for r in range(1, rows):
 				if r == 1:
-					self.report[r] += ",," + self.linuxVer.replace(",", " ") + ",,"
+					if self.linuxVer != "":
+						self.report[r] += "," + self.linuxVer.replace(",", " ") + ","
+					else:
+						self.report[r] += ",,"
 				else:
-					self.report[r] += ",,,,"
+					self.report[r] += ",," # was 4 changed to 3 see no difference
 				if len(self.cpuInfo) > r - 1:
 					self.report[r] += self.cpuInfo[r - 1] + ","
 				else:
@@ -69,10 +68,11 @@ class ReportGenerator():
 		elif(fileFormat == "json"):
 			# print software installed
 			self.report = "{\n\t\"software\": ["
-			for software in self.softwareInstalled.split("\n"):
-				name, version = software.split(" ")
-				self.report = self.report + "\n\t\t{\n\t\t\t\"name\": \"" + name + "\",\n\t\t\t\"version\": \"" + version + "\"\n\t\t},"
-			self.report = self.report[:-1]
+			if self.softwareInstalled != "":
+				for software in self.softwareInstalled.split("\n"):
+					name, version = software.split(" ")
+					self.report = self.report + "\n\t\t{\n\t\t\t\"name\": \"" + name + "\",\n\t\t\t\"version\": \"" + version + "\"\n\t\t},"
+				self.report = self.report[:-1] # Will delete the bracket if section is empty
 			self.report = self.report + "\n\t],\n"
 
 			# print Linux version
@@ -80,23 +80,26 @@ class ReportGenerator():
 
 			# print CPU info
 			self.report += "\t\"cpu\": ["
-			for cpu in self.cpuInfo:
-				self.report += "\n\t\t\"" + cpu + "\","
-			self.report = self.report[:-1]
+			if self.cpuInfo != []:
+				for cpu in self.cpuInfo:
+					self.report += "\n\t\t\"" + cpu + "\","
+				self.report = self.report[:-1] # Will delete the bracket if section is empty
 			self.report += "\n\t],\n"
 
 			# print memory info
 			self.report += "\t\"memory\": ["
-			for mem in self.memInfo:
-				self.report += "\n\t\t\"" + mem + "\","
-			self.report = self.report[:-1]
+			if self.memInfo != []:
+				for mem in self.memInfo:
+					self.report += "\n\t\t\"" + mem + "\","
+				self.report = self.report[:-1] # Will delete the bracket if section is empty
 			self.report += "\n\t],\n"
 
 			# print devices
 			self.report += "\t\"devices\": ["
-			for dev in self.devicesInfo:
-				self.report += "\n\t\t\"" + dev + "\","
-			self.report = self.report[:-1]
+			if self.devicesInfo != []:
+				for dev in self.devicesInfo:
+					self.report += "\n\t\t\"" + dev + "\","
+				self.report = self.report[:-1] # Will delete the bracket if section is empty
 			self.report += "\n\t]\n}\n"
 
 	def print_report(self, fileFormat):
@@ -108,4 +111,3 @@ class ReportGenerator():
 		with open(f"report.{fileFormat}", "w") as file:
 			file.write(self.report)
 		print("Report saved!")
-		pass

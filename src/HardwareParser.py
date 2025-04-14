@@ -37,7 +37,7 @@ class HardwareParser():
 		if not self.version_read:
 			print("ERROR: Failed to fetch version")
 			return []
-		return self.version_read.strip()
+		return self.version_read
 
 	def get_section(self, section_name_list):
 		if not self.lshw_output:
