@@ -6,7 +6,7 @@ class ReportGenerator():
 	linuxVer = None
 	report = None
 
-	def __init__(self, packageInfo="", cpuInfo=[], memInfo=[], devicesInfo=[], linuxVer=[]):
+	def __init__(self, packageInfo="", cpuInfo=[], memInfo=[], devicesInfo=[], linuxVer=""):
 		self.softwareInstalled = packageInfo
 		self.cpuInfo     = cpuInfo
 		self.memInfo     = memInfo
@@ -41,7 +41,7 @@ class ReportGenerator():
 				self.report.append("")
 
 			self.report[0] += ",,Linux Version,,CPU,Memory,Devices"
-			for r in range(1, rows + 1):
+			for r in range(1, rows):
 				if r == 1:
 					self.report[r] += ",," + self.linuxVer.replace(",", " ") + ",,"
 				else:
@@ -63,9 +63,10 @@ class ReportGenerator():
 		elif(fileFormat == "json"):
 			# print software installed
 			self.report = "{\n\t\"software\": ["
-			for software in self.softwareInstalled.split("\n"):
-				name, version = software.split(" ")
-				self.report = self.report + "\n\t\t{\n\t\t\t\"name\": \"" + name + "\",\n\t\t\t\"version\": \"" + version + "\"\n\t\t},"
+			if self.softwareInstalled != "":
+				for software in self.softwareInstalled.split("\n"):
+					name, version = software.split(" ")
+					self.report = self.report + "\n\t\t{\n\t\t\t\"name\": \"" + name + "\",\n\t\t\t\"version\": \"" + version + "\"\n\t\t},"
 			self.report = self.report[:-1]
 			self.report = self.report + "\n\t],\n"
 
