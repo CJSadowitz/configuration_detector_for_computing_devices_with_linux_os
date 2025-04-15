@@ -30,6 +30,8 @@ class PacManInterfaceTest(unittest.TestCase):
 			self.assertEqual(out, expected)
 
 	def test_get_packages(self):
+		# Some minor changes to code may need to be done to unit test
+		# or use some funny functions that are a part of python unittest
 		pass
 
 def get_release():
