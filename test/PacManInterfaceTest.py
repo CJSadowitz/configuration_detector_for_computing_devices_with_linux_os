@@ -1,5 +1,6 @@
 import unittest
 import sys
+import re
 
 sys.path.append("..")
 from src.PacManInterface import PacManInterface
@@ -24,15 +25,17 @@ class PacManInterfaceTest(unittest.TestCase):
 		pc = PacManInterface()
 		expected, out = [], []
 		if get_release() == "ubuntu":
-			out = pc.run_command("apt list --installed")
+			out = pc.run_command("apt list --installed | awk -F'[ /]' '{print $1, $3}'")
 			self.assertNotEqual(out, expected)
 		else:
 			self.assertEqual(out, expected)
 
 	def test_get_packages(self):
-		# Some minor changes to code may need to be done to unit test
-		# or use some funny functions that are a part of python unittest
-		pass
+		pc = PacManInterface()
+		expected = re.compile(r'^(\w+\s\w+\n)+$')
+		out = pc.get_packages()
+		self.assertTrue(expected.match(out), "Output format does not match.")
+		
 
 def get_release():
 	with open("/etc/os-release") as os_release:
