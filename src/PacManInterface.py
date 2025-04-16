@@ -5,7 +5,7 @@ class PacManInterface:
 		self.packages = False
 
 	def run_command(self, cmd):
-		if cmd != "pacman -Q" and "apt list --installed":
+		if cmd != "pacman -Q" and "apt list --installed | awk -F'[ /]' '{print $1, $3}'":
 			return []
 		with os.popen(cmd) as stdout:
 			return stdout.read().strip()
