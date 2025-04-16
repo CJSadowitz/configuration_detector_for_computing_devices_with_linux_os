@@ -32,7 +32,7 @@ class PacManInterfaceTest(unittest.TestCase):
 
 	def test_get_packages(self):
 		pc = PacManInterface()
-		expected = re.compile(r'^(\w+\s\w+\n)+$')
+		expected = re.compile(r'^(\S+\s\S+\n)*\S+\s\S+$')
 		out = pc.get_packages()
 		self.assertTrue(expected.match(out), "Output format does not match.")
 		
