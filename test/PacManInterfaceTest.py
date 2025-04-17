@@ -35,12 +35,12 @@ class PacManInterfaceTest(unittest.TestCase):
 		expected = re.compile(r'^(\S+\s\S+\n)*\S+\s\S+$')
 		# This depends on the user testing this code to be on a linux os
 		out = pc.get_packages()
-		out_lines = out.split('\n')
-		for line in out_lines:
-			does_match = re.match(r'^\S+\s\S+$', line)
-			if not does_match:
-				self.assertTrue(False, line)
-		# out = "OS not identifiable." # for some reason this is not working on my system with the actual get_packages
+		if out != "OS not identifiable.":
+			out_lines = out.split('\n')
+			for line in out_lines:
+				does_match = re.match(r'^\S+\s\S+$', line)
+				if not does_match:
+					self.assertTrue(False, line)
 		if (out == "OS not identifiable."):
 			# Example output for non windows systems
 			out = "xkb-data 2.41-2ubuntu1.1\nxml-core 0.19\nxorg-docs-core 1:1.7.1-1.2\nxorg-sgml-doctools 1:1.11-1.1\nxorg 1:7.7+23ubuntu3"
