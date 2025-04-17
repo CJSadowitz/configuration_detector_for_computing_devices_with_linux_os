@@ -18,7 +18,12 @@ class PacManInterface:
 				self.packages = self.run_command("pacman -Q")
 				return self.packages
 			elif "ubuntu" in os_info or "debian" in os_info:
-				self.packages = self.run_command("apt list --installed | awk -F'[ /]' '{print $1, $3}'")
+				out = self.run_command("apt list --installed | awk -F'[ /]' '{print $1, $3}'")
+				# Remove the "Listing..." line
+				out_lines = out.split('\n')
+				out_lines.pop(0)
+				result = '\n'.join(out_lines)
+				self.packages = result
 				return self.packages
 			# and so on
 		except FileNotFoundError:
