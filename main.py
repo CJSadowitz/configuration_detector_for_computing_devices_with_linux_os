@@ -9,6 +9,9 @@ def main():
 	hardware = HardwareParser()
 	args = parser.get_cmd_arguments()
 	software, cpu_info, mem_info, devices, linux_ver = "", [], [], [], ""
+	if (args == -1):
+		print ("Invalid Arguments, use '--help'")
+		return
 	if args.get_packages:  software  = packages.get_packages()
 	if args.get_CPU_info:  cpu_info  = hardware.get_CPU_info()
 	if args.get_mem_info:  mem_info  = hardware.get_mem_info()
