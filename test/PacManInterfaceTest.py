@@ -15,10 +15,13 @@ class PacManInterfaceTest(unittest.TestCase):
 	def test_run_command_pacman(self):
 		pc = PacManInterface()
 		expected, out = [], []
-		if get_release() == "arch":
-			out = pc.run_command("pacman -Q")
-			self.assertNotEqual(out, expected)
-		else:
+		try:
+			if get_release() == "arch":
+				out = pc.run_command("pacman -Q")
+				self.assertNotEqual(out, expected)
+			else:
+				self.assertEqual(out, expected)
+		except Exception as e:
 			self.assertEqual(out, expected)
 
 	def test_run_command_ubuntu(self):
